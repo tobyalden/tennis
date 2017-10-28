@@ -10,7 +10,7 @@ class Player extends FlxSprite
     public function new(x:Int, y:Int)
     {
         super(x, y);
-        makeGraphic(16, 16, FlxColor.WHITE);
+        makeGraphic(32, 64, FlxColor.WHITE);
     }
 
     override public function update(elapsed:Float)
