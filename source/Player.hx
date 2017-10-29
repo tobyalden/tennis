@@ -88,7 +88,7 @@ class Player extends FlxSprite
         else {
             racket.x = x;
         }
-        racket.y = y - height;
+        racket.y = y - height/2;
         racket.visible = hitCooldown.active;
         racket.alpha = hitCooldown.timeLeft / hitCooldown.time;
     }
