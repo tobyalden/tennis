@@ -16,9 +16,15 @@ class Player extends FlxSprite
     public static inline var SIDE_INFLUENCE = 500;
     public static inline var DISTANCE_INFLUENCE = 500;
 
+    public static inline var ROLL_TIME = 0.24;
+    public static inline var ROLL_COOLDOWN = 0.5;
+    public static inline var ROLL_POWER = 2.5;
+
     private var racket:FlxSprite;
     private var hitting:FlxTimer;
     private var hitCooldown:FlxTimer;
+    private var rolling:FlxTimer;
+    private var rollCooldown:FlxTimer;
     private var isPlayer2:Bool;
 
     public function new(x:Int, y:Int, isPlayer2:Bool)
@@ -40,11 +46,35 @@ class Player extends FlxSprite
         );
         hitting = new FlxTimer();
         hitCooldown = new FlxTimer();
+        rolling = new FlxTimer();
+        rollCooldown = new FlxTimer();
+    }
+
+    public function roll() {
+        rolling.start(ROLL_TIME);
+        rollCooldown.start(ROLL_COOLDOWN);
+        velocity.scale(ROLL_POWER);
     }
 
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
+        if(!rollCooldown.active) {
+            if(Controls.checkJustPressed('jump', isPlayer2)) {
+                roll();
+            }
+        }
+        if(rolling.active) {
+            var color = FlxColor.interpolate(
+                FlxColor.PURPLE, FlxColor.WHITE, rollCooldown.progress
+            );
+            makeGraphic(32, 64, color);
+            return;
+        }
+        else {
+            makeGraphic(32, 64, FlxColor.WHITE);
+        }
+
         movement();
         if(!hitCooldown.active) {
             if(Controls.checkJustPressed('shoot', isPlayer2)) {
