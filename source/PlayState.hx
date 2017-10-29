@@ -19,6 +19,7 @@ class PlayState extends FlxState
         add(court);
         add(ball);
         add(ball.getBall());
+        add(player.getRacket());
         add(player);
 		super.create();
 	}
