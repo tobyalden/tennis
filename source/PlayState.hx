@@ -34,39 +34,40 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
+        Controls.controller1 = FlxG.gamepads.getByID(0);
+        Controls.controller2 = FlxG.gamepads.getByID(1);
 		super.update(elapsed);
         FlxG.overlap(ball, player1.getRacket(), player1HitBall);
         FlxG.overlap(ball, player2.getRacket(), player2HitBall);
 	}
 
     public function player1HitBall(_:FlxObject, _:FlxObject) {
-        hitBall(true);
-    }
-
-    public function player2HitBall(_:FlxObject, _:FlxObject) {
         hitBall(false);
     }
 
-    public function hitBall(isPlayer1:Bool) {
+    public function player2HitBall(_:FlxObject, _:FlxObject) {
+        hitBall(true);
+    }
+
+    public function hitBall(isPlayer2:Bool) {
         var player:Player;
-        if(isPlayer1) {
-            player = player1;
+        if(isPlayer2) {
+            player = player2;
         }
         else {
-            player = player2;
+            player = player1;
         }
 
         if(!player.isHitting()) {
             return;
         }
-        if(!FlxG.overlap(ball.getBall(), player.getRacket())) {
-            return;
-        }
+
         ball.velocity.x = Player.HIT_POWER;
-        if(!isPlayer1) {
+        if(isPlayer2) {
             ball.velocity.x *= -1;
         }
-        ball.velocity.y += player.velocity.y;
+        ball.velocity.y *= -1;
+        ball.velocity.y += player.velocity.y/2;
         ball.uplift = Math.abs(ball.uplift) + Player.HIT_UPLIFT;
         ball.uplift = Math.min(ball.uplift, Ball.MAX_UPLIFT);
         player.stopHitting();

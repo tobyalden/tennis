@@ -10,7 +10,7 @@ class Ball extends FlxSprite
     public static inline var AIR_DRAG = 0.998;
     public static inline var GROUND_DRAG = 0.99;
     public static inline var BOUNCE_DRAG = 0.9;
-    public static inline var MAX_UPLIFT = 20;
+    public static inline var MAX_UPLIFT = 10;
 
     public var uplift:Float;
 
@@ -24,8 +24,7 @@ class Ball extends FlxSprite
         ball = new FlxSprite(x, y);
         ball.loadGraphic('assets/images/ball.png');
         altitude = 100;
-        velocity.x = SPEED;
-        velocity.y = SPEED;
+        velocity.set(SPEED, SPEED);
         uplift = 0;
     }
 
@@ -55,7 +54,7 @@ class Ball extends FlxSprite
             velocity.y = -velocity.y;
         }
 
-        // Apply gravity
+        // Apply gravity & drag
         uplift -= GRAVITY;
         altitude += uplift;
         if(altitude <= 0) {

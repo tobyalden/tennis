@@ -16,10 +16,18 @@ class Controls {
         'shoot'=>FlxKey.X
     ];
 
-    public static var controller:FlxGamepad;
+    public static var controller1:FlxGamepad;
+    public static var controller2:FlxGamepad;
     public static var controls:Map<String, Int> = KEYBOARD_CONTROLS;
 
-    public static function checkPressed(name:String) {
+    public static function checkPressed(name:String, isPlayerTwo:Bool) {
+        var controller:FlxGamepad;
+        if(isPlayerTwo) {
+            controller = controller2;
+        }
+        else {
+            controller = controller1;
+        }
         if(controller == null) {
             return FlxG.keys.anyPressed([controls[name]]);
         }
@@ -46,7 +54,14 @@ class Controls {
         return false;
     }
 
-    public static function checkJustPressed(name:String) {
+    public static function checkJustPressed(name:String, isPlayerTwo:Bool) {
+        var controller:FlxGamepad;
+        if(isPlayerTwo) {
+            controller = controller2;
+        }
+        else {
+            controller = controller1;
+        }
         if(controller == null) {
             return FlxG.keys.anyJustPressed([controls[name]]);
         }
@@ -61,7 +76,14 @@ class Controls {
         return false;
     }
 
-    public static function checkJustReleased(name:String) {
+    public static function checkJustReleased(name:String, isPlayerTwo:Bool) {
+        var controller:FlxGamepad;
+        if(isPlayerTwo) {
+            controller = controller2;
+        }
+        else {
+            controller = controller1;
+        }
         if(controller == null) {
             return FlxG.keys.anyJustReleased([controls[name]]);
         }
