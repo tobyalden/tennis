@@ -1,6 +1,7 @@
 package;
 
 import flixel.*;
+import flixel.math.*;
 import flixel.util.*;
 
 class Player extends FlxSprite
@@ -45,36 +46,6 @@ class Player extends FlxSprite
                 hitCooldown.start(HIT_COOLDOWN);
             }
         }
-        racket.visible = hitCooldown.active;
-        racket.alpha = hitCooldown.timeLeft / hitCooldown.time;
-    }
-
-    private function movement()
-    {
-        if(Controls.checkPressed('up', isPlayer2)) {
-            velocity.y = -SPEED;
-        }
-        else if(Controls.checkPressed('down', isPlayer2)) {
-            velocity.y = SPEED;
-        }
-        else {
-            velocity.y = 0;
-        }
-
-        if(Controls.checkPressed('left', isPlayer2)) {
-            velocity.x = -SPEED;
-        }
-        else if(Controls.checkPressed('right', isPlayer2)) {
-            velocity.x = SPEED;
-        }
-        else {
-            velocity.x = 0;
-        }
-
-        if(velocity.x != 0 && velocity.y != 0) {
-            velocity.scale(0.707106781);
-        }
-
         if(isPlayer2) {
             racket.x = x - width * 2;
         }
@@ -82,6 +53,23 @@ class Player extends FlxSprite
             racket.x = x;
         }
         racket.y = y - height;
+        racket.visible = hitCooldown.active;
+        racket.alpha = hitCooldown.timeLeft / hitCooldown.time;
+    }
+
+    private function movement()
+    {
+        var controller = Controls.getController(isPlayer2);
+        if(controller == null) {
+            return;
+        }
+        var input = new FlxVector(
+            controller.analog.value.LEFT_STICK_X,
+            controller.analog.value.LEFT_STICK_Y
+        );
+        input.normalize();
+        input.scale(SPEED);
+        velocity.set(input.x, input.y);
     }
 
     public function getRacket() {

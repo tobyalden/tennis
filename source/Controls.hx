@@ -20,14 +20,18 @@ class Controls {
     public static var controller2:FlxGamepad;
     public static var controls:Map<String, Int> = KEYBOARD_CONTROLS;
 
-    public static function checkPressed(name:String, isPlayerTwo:Bool) {
-        var controller:FlxGamepad;
-        if(isPlayerTwo) {
-            controller = controller2;
+    public static function getController(isPlayer2:Bool) {
+        if(isPlayer2) {
+            return controller2;
         }
         else {
-            controller = controller1;
+            return controller1;
         }
+    }
+
+
+    public static function checkPressed(name:String, isPlayer2:Bool) {
+        var controller = getController(isPlayer2);
         if(controller == null) {
             return FlxG.keys.anyPressed([controls[name]]);
         }
@@ -54,14 +58,8 @@ class Controls {
         return false;
     }
 
-    public static function checkJustPressed(name:String, isPlayerTwo:Bool) {
-        var controller:FlxGamepad;
-        if(isPlayerTwo) {
-            controller = controller2;
-        }
-        else {
-            controller = controller1;
-        }
+    public static function checkJustPressed(name:String, isPlayer2:Bool) {
+        var controller = getController(isPlayer2);
         if(controller == null) {
             return FlxG.keys.anyJustPressed([controls[name]]);
         }
@@ -76,14 +74,8 @@ class Controls {
         return false;
     }
 
-    public static function checkJustReleased(name:String, isPlayerTwo:Bool) {
-        var controller:FlxGamepad;
-        if(isPlayerTwo) {
-            controller = controller2;
-        }
-        else {
-            controller = controller1;
-        }
+    public static function checkJustReleased(name:String, isPlayer2:Bool) {
+        var controller = getController(isPlayer2);
         if(controller == null) {
             return FlxG.keys.anyJustReleased([controls[name]]);
         }
