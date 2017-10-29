@@ -8,19 +8,28 @@ class Player extends FlxSprite
     public static inline var SPEED = 350;
     public static inline var HIT_TIME = 0.1;
     public static inline var HIT_COOLDOWN = 0.7;
-    public static inline var HIT_POWER = 10;
+    public static inline var HIT_POWER = 500;
+    public static inline var HIT_UPLIFT = 10;
 
     private var racket:FlxSprite;
     private var hitting:FlxTimer;
     private var hitCooldown:FlxTimer;
+    private var isPlayerTwo:Bool;
 
-    public function new(x:Int, y:Int)
+    public function new(x:Int, y:Int, isPlayerTwo:Bool)
     {
         super(x, y);
+        this.isPlayerTwo = isPlayerTwo;
         makeGraphic(32, 64, FlxColor.WHITE);
         racket = new FlxSprite(0, 0);
-        racket.makeGraphic(
-            Std.int(width * 3), Std.int(height * 3), FlxColor.RED
+        var racketColor:FlxColor;
+        if(isPlayerTwo) {
+            racketColor = FlxColor.BLUE;
+        }
+        else {
+            racketColor = FlxColor.RED;
+        } racket.makeGraphic(
+            Std.int(width * 3), Std.int(height * 3), racketColor
         );
         hitting = new FlxTimer();
         hitCooldown = new FlxTimer();
@@ -66,7 +75,12 @@ class Player extends FlxSprite
             velocity.scale(0.707106781);
         }
 
-        racket.x = x;
+        if(isPlayerTwo) {
+            racket.x = x - width * 2;
+        }
+        else {
+            racket.x = x;
+        }
         racket.y = y - height;
     }
 

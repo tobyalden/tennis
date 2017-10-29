@@ -10,6 +10,7 @@ class Ball extends FlxSprite
     public static inline var AIR_DRAG = 0.998;
     public static inline var GROUND_DRAG = 0.99;
     public static inline var BOUNCE_DRAG = 0.9;
+    public static inline var MAX_UPLIFT = 20;
 
     public var uplift:Float;
 
