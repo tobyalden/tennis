@@ -22,6 +22,8 @@ class Player extends FlxSprite
         super(x, y);
         this.isPlayer2 = isPlayer2;
         makeGraphic(32, 64, FlxColor.WHITE);
+        height = 32;
+        offset.y = 32;
         racket = new FlxSprite(0, 0);
         var racketColor:FlxColor;
         if(isPlayer2) {
@@ -67,6 +69,12 @@ class Player extends FlxSprite
             controller.analog.value.LEFT_STICK_X,
             controller.analog.value.LEFT_STICK_Y
         );
+        if(Math.abs(input.x) < Controls.DEAD_ZONE) {
+            input.x = 0;
+        }
+        if(Math.abs(input.y) < Controls.DEAD_ZONE) {
+            input.y = 0;
+        }
         input.normalize();
         input.scale(SPEED);
         velocity.set(input.x, input.y);
