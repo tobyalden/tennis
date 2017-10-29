@@ -27,5 +27,19 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+        FlxG.overlap(ball, player.getRacket(), hitBall);
 	}
+
+    public function hitBall(_:FlxObject, _:FlxObject) {
+        if(!player.isHitting()) {
+            return;
+        }
+        if(!FlxG.overlap(ball.getBall(), player.getRacket())) {
+            return;
+        }
+        ball.velocity.x = 500;
+        ball.velocity.y += player.velocity.y;
+        ball.uplift = Math.abs(ball.uplift) + Player.HIT_POWER;
+        player.stopHitting();
+    }
 }

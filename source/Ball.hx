@@ -11,9 +11,10 @@ class Ball extends FlxSprite
     public static inline var GROUND_DRAG = 0.99;
     public static inline var BOUNCE_DRAG = 0.9;
 
+    public var uplift:Float;
+
     private var ball:FlxSprite;
     private var altitude:Float;
-    private var verticalVelocity:Float;
 
     public function new(x:Int, y:Int)
     {
@@ -24,7 +25,7 @@ class Ball extends FlxSprite
         altitude = 100;
         velocity.x = SPEED;
         velocity.y = SPEED;
-        verticalVelocity = 0;
+        uplift = 0;
     }
 
     override public function update(elapsed:Float)
@@ -54,11 +55,11 @@ class Ball extends FlxSprite
         }
 
         // Apply gravity
-        verticalVelocity -= GRAVITY;
-        altitude += verticalVelocity;
+        uplift -= GRAVITY;
+        altitude += uplift;
         if(altitude <= 0) {
             altitude = 0;
-            verticalVelocity = -verticalVelocity * BOUNCE_DRAG;
+            uplift = -uplift * BOUNCE_DRAG;
             velocity.scale(GROUND_DRAG);
         }
         else {
@@ -77,6 +78,4 @@ class Ball extends FlxSprite
     public function getBall() {
         return ball;
     }
-
 }
-

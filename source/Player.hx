@@ -8,6 +8,7 @@ class Player extends FlxSprite
     public static inline var SPEED = 350;
     public static inline var HIT_TIME = 0.1;
     public static inline var HIT_COOLDOWN = 0.7;
+    public static inline var HIT_POWER = 10;
 
     private var racket:FlxSprite;
     private var hitting:FlxTimer;
@@ -71,6 +72,14 @@ class Player extends FlxSprite
 
     public function getRacket() {
         return racket;
+    }
+
+    public function isHitting() {
+        return hitting.active;
+    }
+
+    public function stopHitting() {
+        hitting.cancel();
     }
 
 }
