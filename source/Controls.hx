@@ -29,7 +29,6 @@ class Controls {
         }
     }
 
-
     public static function checkPressed(name:String, isPlayer2:Bool) {
         var controller = getController(isPlayer2);
         if(controller == null) {

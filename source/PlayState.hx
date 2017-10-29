@@ -66,8 +66,12 @@ class PlayState extends FlxState
         if(isPlayer2) {
             ball.velocity.x *= -1;
         }
+        ball.velocity.x += (
+            player.getDistanceFactor() * Player.DISTANCE_INFLUENCE
+        );
         ball.velocity.y *= -1;
         ball.velocity.y += player.velocity.y/2;
+        ball.velocity.y += player.getSideFactor() * Player.SIDE_INFLUENCE;
         ball.uplift = Math.abs(ball.uplift) + Player.HIT_UPLIFT;
         ball.uplift = Math.min(ball.uplift, Ball.MAX_UPLIFT);
         player.stopHitting();

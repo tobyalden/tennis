@@ -12,6 +12,10 @@ class Player extends FlxSprite
     public static inline var HIT_POWER = 700;
     public static inline var HIT_UPLIFT = 10;
 
+    // Influence is how much the shot is pushed towards the opponent's court
+    public static inline var SIDE_INFLUENCE = 500;
+    public static inline var DISTANCE_INFLUENCE = 500;
+
     private var racket:FlxSprite;
     private var hitting:FlxTimer;
     private var hitCooldown:FlxTimer;
@@ -79,6 +83,19 @@ class Player extends FlxSprite
         input.scale(SPEED);
         velocity.set(input.x, input.y);
     }
+
+    public function getSideFactor() {
+        var centerY = y + height/2;
+        var sideAmount = FlxG.height/2 - centerY;
+        return sideAmount / FlxG.height * 2;
+    }
+
+    public function getDistanceFactor() {
+        var centerX = x + width/2;
+        var distance = FlxG.width/2 - centerX;
+        return distance / FlxG.width * 2;
+    }
+
 
     public function getRacket() {
         return racket;
